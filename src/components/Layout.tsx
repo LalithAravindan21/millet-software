@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { 
-  LayoutDashboard, MenuIcon,
-  ShoppingCart, 
-  Package, 
-  ClipboardList, 
-  Users, 
-  BarChart3, 
+import {
+  LayoutDashboard,
+  MenuIcon,
+  ShoppingCart,
+  Package,
+  ClipboardList,
+  Users,
+  BarChart3,
   Settings,
-  Wheat
+  Wheat,
 } from 'lucide-react';
-
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -36,7 +36,6 @@ export default function Layout({ children, currentPage, onPageChange }: LayoutPr
 
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-50">
-      {/* Sidebar */}
       {/* Mobile Header */}
       <div className="flex items-center justify-between p-4 bg-amber-600 md:hidden">
         <div className="flex items-center space-x-3">
@@ -52,7 +51,7 @@ export default function Layout({ children, currentPage, onPageChange }: LayoutPr
 
       {/* Sidebar */}
       <div className={`w-64 bg-gradient-to-b from-amber-600 to-amber-700 shadow-lg ${isSidebarOpen ? 'block' : 'hidden'} md:block`}>
-        <div className="p-6 hidden md:block"> {/* Hide on small screens */}
+        <div className="p-6 hidden md:block">
           <div className="flex items-center space-x-3">
             <div className="p-2 bg-white rounded-lg">
               <Wheat className="h-8 w-8 text-amber-600" />
@@ -63,14 +62,17 @@ export default function Layout({ children, currentPage, onPageChange }: LayoutPr
             </div>
           </div>
         </div>
-        
+
         <nav className="mt-6">
           {menuItems.map((item) => {
             const Icon = item.icon;
             return (
               <button
                 key={item.id}
-                onClick={() => onPageChange(item.id)}
+                onClick={() => {
+                  onPageChange(item.id);
+                  if (isSidebarOpen) setIsSidebarOpen(false);
+                }}
                 className={`w-full flex items-center px-6 py-3 text-left transition-colors duration-200 ${
                   currentPage === item.id
                     ? 'bg-amber-800 text-white border-r-4 border-white'
@@ -99,7 +101,7 @@ export default function Layout({ children, currentPage, onPageChange }: LayoutPr
                     weekday: 'long',
                     year: 'numeric',
                     month: 'long',
-                    day: 'numeric'
+                    day: 'numeric',
                   })}
                 </div>
               </div>
